@@ -34,7 +34,7 @@
 
 {{-- Футер --}}
 <footer class="p-4 mt-16 text-center text-custom-text-secondary-light dark:text-custom-text-secondary-dark">
-    © {{ date('Y') }} AI Fire LMS. Все права защищены.
+    © {{ date('Y') }} NoName LMS. Все права защищены.
 </footer>
 </body>
 </html>

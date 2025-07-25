@@ -5,7 +5,7 @@
               flex flex-col p-5"
        aria-label="Sidebar">
     <div class="text-center mb-10">
-        <a href="{{ route('dashboard') }}" class="text-xl font-bold text-custom-text-primary-light dark:text-custom-text-primary-dark">AI Fire LMS</a>
+        <a href="{{ route('dashboard') }}" class="text-xl font-bold text-custom-text-primary-light dark:text-custom-text-primary-dark">{{ config('app.name', 'Laravel') }}</a>
     </div>
     <nav class="flex-grow space-y-2">
         <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-600 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-custom-border dark:hover:text-black {{ request()->routeIs('dashboard') ? 'bg-custom-accent text-white' : '' }}">

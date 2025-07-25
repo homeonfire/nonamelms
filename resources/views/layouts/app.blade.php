@@ -22,7 +22,7 @@
 
     {{-- ШАПКА ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ --}}
     <header class="p-4 border-b border-custom-border-light dark:border-custom-border-dark flex items-center justify-between lg:hidden">
-        <a href="{{ route('dashboard') }}" class="text-xl font-bold text-custom-text-primary-light dark:text-custom-text-primary-dark">AI Fire LMS</a>
+        <a href="{{ route('dashboard') }}" class="text-xl font-bold text-custom-text-primary-light dark:text-custom-text-primary-dark">{{ config('app.name', 'Laravel') }}</a>
         {{-- Кнопка "бургер" для открытия меню --}}
         <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-600">
             <span class="sr-only">Открыть меню</span>

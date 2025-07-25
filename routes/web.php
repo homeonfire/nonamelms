@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\EditorJsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\StaticPageController as AdminStaticPageController;
+use Illuminate\Support\Facades\Mail;
 
 
 /*
@@ -35,7 +36,16 @@ use App\Http\Controllers\Admin\StaticPageController as AdminStaticPageController
 // Главная страница (Лендинг)
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 Route::get('/pages/{page:slug}', [PageController::class, 'show'])->name('pages.show');
-
+Route::get('/test-mail', function () {
+    try {
+        Mail::raw('Это тестовое письмо.', function ($message) {
+            $message->to('getintouch.hof@gmail.com')->subject('Проверка почты Laravel');
+        });
+        return 'Письмо должно быть отправлено! Проверьте Mailtrap.';
+    } catch (\Exception $e) {
+        return 'Ошибка отправки: ' . $e->getMessage();
+    }
+});
 
 
 // --- 2. Роуты для аутентифицированных пользователей ---
@@ -43,8 +53,8 @@ Route::get('/pages/{page:slug}', [PageController::class, 'show'])->name('pages.s
 // Группа роутов, доступных только после входа в систему
 Route::middleware(['auth', 'verified'])->group(function () {
     // Дашборд
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->middleware(['auth', 'verified'])->name('dashboard'); // `verified` - это ключ
     // Просмотр курса и уроков
     Route::get('/courses/{course}', [CourseController::class, 'show'])->name('courses.show');
     Route::get('/courses/{course}/lessons/{lesson}', [CourseController::class, 'show'])->name('lessons.show');
