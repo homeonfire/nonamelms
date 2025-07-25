@@ -1,61 +1,114 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Конечно\! Создание хорошего `Readme.md` — это очень важный шаг, который помогает другим разработчикам (и вам в будущем) быстро понять, что это за проект и как с ним работать.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Вот готовый `Readme.md` для вашего проекта. Он подробно описывает все возможности, которые мы с вами реализовали, и содержит пошаговую инструкцию по установке.
 
-## About Laravel
+Просто скопируйте этот текст и вставьте его в файл `Readme.md` в корневой папке вашего проекта на GitHub.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-----
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# AI Fire LMS - Open Source LMS на Laravel
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**AI Fire LMS** — это полнофункциональная, готовая к использованию LMS-платформа (Learning Management System) с открытым исходным кодом. Она создана для тех, кто хочет запустить свою собственную онлайн-школу или образовательный проект с полным контролем над кодом и без ограничений по количеству пользователей или курсов.
 
-## Learning Laravel
+Платформа построена на современных технологиях, легко расширяется и кастомизируется под любые задачи.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🚀 Ключевые возможности
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Для студентов:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* **Современный интерфейс:** Чистый, адаптивный дизайн с поддержкой светлой и темной тем.
+* **Дашборд:** Персональная страница с разделением на "Мои курсы" и "Рекомендации".
+* **Просмотр уроков:** Удобный плеер с поддержкой видео с YouTube, Kinescope и Rutube, а также отображение форматированного текстового контента, созданного в Editor.js.
+* **Интерактивные ДЗ:** Студенты могут сдавать домашние задания, получать вердикт ("Принято" / "Отклонено") и комментарии от преподавателя, а также пересдавать работы.
+* **Отслеживание прогресса:**
+    * Автоматическое завершение урока после принятия ДЗ.
+    * Ручное завершение уроков без ДЗ.
+    * Динамический прогресс-бар на карточках курсов и на странице курса.
+    * Визуальные отметки (галочки) у пройденных уроков.
+* **"Умные" ссылки:** Платформа запоминает последний просмотренный урок и возвращает пользователя прямо к нему.
+* **Страница "Мои ответы":** Централизованное место для отслеживания статуса всех сданных домашних заданий.
 
-## Laravel Sponsors
+### Для администраторов:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+* **Полноценная админ-панель:** Отдельный, защищенный интерфейс для управления всей платформой.
+* **Управление курсами (CRUD):** Создание, редактирование и удаление курсов с указанием названия, описания и уровня сложности.
+* **Управление структурой курса:** Визуальный интерфейс для добавления, редактирования и удаления модулей и уроков.
+* **Мощный редактор контента:** Использование **Editor.js** для создания уроков с заголовками, списками, кодом, изображениями, таблицами, цитатами, предупреждениями и прикрепленными файлами.
+* **Управление домашними заданиями:** Создание ДЗ с несколькими вопросами для любого урока.
+* **Проверка ДЗ:** Удобный интерфейс для проверки работ, оставления комментариев и вынесения вердикта ("Принять" / "Отклонить").
+* **Управление пользователями (CRUD):**
+    * Ручное создание пользователей.
+    * **Импорт пользователей из XLSX-файла** с возможностью автоматической выдачи доступа к курсам.
+    * Редактирование данных и смена ролей (Пользователь/Администратор).
+* **Управление категориями (CRUD):** Создание и редактирование категорий для курсов.
+* **Управление статическими страницами:** Создание и редактирование страниц (например, "Политика конфиденциальности") через Editor.js.
 
-### Premium Partners
+## 🛠️ Технологический стек
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+* **Бэкенд:** Laravel 12
+* **Фронтенд:** Tailwind CSS
+* **UI-компоненты:** Flowbite
+* **Редактор контента:** Editor.js
+* **База данных:** MySQL
+* **Среда разработки:** Laragon
 
-## Contributing
+## ⚙️ Установка и запуск
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1.  **Клонировать репозиторий:**
 
-## Code of Conduct
+    ```bash
+    git clone https://github.com/aifire-team/aifire-lms-academy.git
+    cd aifire-lms
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2.  **Установить PHP-зависимости:**
 
-## Security Vulnerabilities
+    ```bash
+    composer install
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+3.  **Настроить окружение:**
 
-## License
+    * Скопируйте файл `.env.example` в `.env`:
+      ```bash
+      cp .env.example .env
+      ```
+    * Сгенерируйте ключ приложения:
+      ```bash
+      php artisan key:generate
+      ```
+    * Откройте файл `.env` и настройте подключение к вашей базе данных (имя БД, пользователь, пароль).
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+4.  **Создать таблицы в базе данных:**
+    Выполните миграции для создания всех необходимых таблиц.
+
+    ```bash
+    php artisan migrate
+    ```
+
+5.  **Установить Frontend-зависимости:**
+
+    ```bash
+    npm install
+    ```
+
+6.  **Скомпилировать стили и скрипты:**
+
+    ```bash
+    npm run dev
+    ```
+
+7.  **Назначить себе роль администратора:**
+
+    * Зарегистрируйтесь на сайте через стандартную форму.
+    * Выполните SQL-запрос в вашей базе данных, заменив email на свой:
+      ```sql
+      UPDATE `users` SET `role` = 'admin' WHERE `email` = 'ваш_email@example.com';
+      ```
+
+8.  **Готово\!** Ваш проект доступен по локальному адресу (например, `http://aifire-lms.test`).
+
+## 📖 Использование
+
+* **Пользовательская часть:** Доступна по корневому URL.
+* **Админ-панель:** Доступна по адресу `/admin`. Ссылка на нее также появится в боковом меню, если вы вошли под аккаунтом администратора.
