@@ -1,21 +1,49 @@
-*.log
-.DS_Store
-.env
-.env.backup
-.env.production
-.phpactor.json
-.phpunit.result.cache
-/.fleet
-/.idea
-/.nova
-/.phpunit.cache
-/.vscode
-/.zed
-/auth.json
-/node_modules
-/storage/*.key
-/storage/pail
+# Файлы окружения (содержат секретные ключи и пароли)
+/.env
+/.env.backup
+/.env.production
+
+# Папки с зависимостями (устанавливаются через composer и npm)
 /vendor
+/node_modules
+
+# Сгенерированные файлы Laravel
+/public/build
+/public/hot
+/public/storage
+/storage/app/public
+/storage/framework/cache/data/
+/storage/framework/sessions/
+/storage/framework/views/
+/storage/logs
+/storage/pail
+
+# Ключи и токены
+/storage/*.key
+/auth.json
+
+# Лог-файлы
+*.log
+npm-debug.log*
+yarn-error.log*
+yarn-debug.log*
+
+# Настройки IDE и редакторов
+/.idea
+/.vscode
+/.fleet
+/.zed
+/.nova
+.phpactor.json
+
+# Кэш тестов
+.phpunit.result.cache
+.phpunit.cache/
+
+# Специфичные для ОС файлы
+.DS_Store
+Thumbs.db
+
+# Файлы окружения для Homestead
 Homestead.json
 Homestead.yaml
-Thumbs.db
