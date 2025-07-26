@@ -1,2 +1,7 @@
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /login
+Disallow: /register
+Disallow: /password/reset
+
+Sitemap: http://nnlms.ru/sitemap.xml
