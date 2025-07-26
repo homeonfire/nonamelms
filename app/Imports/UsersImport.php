@@ -6,12 +6,12 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Illuminate\Auth\Events\Registered; // <-- 1. Импортируем класс события
 
 class UsersImport implements ToModel, WithHeadingRow
 {
     private $courseIds;
 
-    // Конструктор, который принимает массив ID курсов из контроллера
     public function __construct(array $courseIds)
     {
         $this->courseIds = $courseIds;
@@ -24,18 +24,19 @@ class UsersImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        // Создаем нового пользователя из данных строки
-        $user = new User([
+        $user = User::create([
             'name'     => $row['name'],
             'email'    => $row['email'],
             'password' => Hash::make($row['password']),
-            'role'     => 'user', // По умолчанию все импортируемые - пользователи
+            'role'     => 'user',
         ]);
 
-        // Сохраняем пользователя, чтобы получить его ID
-        $user->save();
+        // --- ИСПРАВЛЕНО: Запускаем событие регистрации ---
+        // Эта строка "скажет" Laravel отправить письмо с подтверждением
+        event(new Registered($user));
+        // ---------------------------------------------
 
-        // Привязываем выбранные курсы к только что созданному пользователю
+        // Привязываем выбранные курсы
         if (!empty($this->courseIds)) {
             $user->courses()->sync($this->courseIds);
         }

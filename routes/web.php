@@ -22,6 +22,8 @@ use App\Http\Controllers\Admin\EditorJsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\StaticPageController as AdminStaticPageController;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Admin\SettingController as AdminSettingController; // Убедитесь, что эта строка есть вверху файла
+
 
 
 /*
@@ -39,7 +41,7 @@ Route::get('/pages/{page:slug}', [PageController::class, 'show'])->name('pages.s
 Route::get('/test-mail', function () {
     try {
         Mail::raw('Это тестовое письмо.', function ($message) {
-            $message->to('getintouch.hof@gmail.com')->subject('Проверка почты Laravel');
+            $message->to('i@aifire.ru')->subject('Проверка почты Laravel');
         });
         return 'Письмо должно быть отправлено! Проверьте Mailtrap.';
     } catch (\Exception $e) {
@@ -124,6 +126,13 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'admin'])->group(functio
     Route::resource('/categories', AdminCategoryController::class)->names('admin.categories');
 
     Route::resource('/pages', AdminStaticPageController::class)->names('admin.pages');
+
+    // --- НАЧАЛО НОВОГО БЛОКА ---
+    // Роут для страницы настроек
+    Route::get('/settings', [AdminSettingController::class, 'index'])->name('admin.settings.index');
+    // Роут для сохранения настроек
+    Route::post('/settings', [AdminSettingController::class, 'update'])->name('admin.settings.update');
+    // --- КОНЕЦ НОВОГО БЛОКА ---
 });
 
 

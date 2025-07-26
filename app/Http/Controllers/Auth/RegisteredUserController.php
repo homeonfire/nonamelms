@@ -27,13 +27,16 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
+    /**
+     * Обрабатывает запрос на регистрацию.
+     */
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'terms' => ['required', 'accepted'], // <-- ДОБАВЬТЕ ЭТУ СТРОКУ
+            'terms' => ['required', 'accepted'],
         ]);
 
         $user = User::create([
@@ -41,6 +44,15 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        // --- НАЧАЛО НОВОЙ ЛОГИКИ ---
+        // ID курса, который будет выдан автоматически.
+        // Замените 1 на ID нужного вам курса.
+        $defaultCourseId = 1;
+
+        // Привязываем курс к только что созданному пользователю.
+        $user->courses()->attach($defaultCourseId);
+        // --- КОНЕЦ НОВОЙ ЛОГИКИ ---
 
         event(new Registered($user));
 

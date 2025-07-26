@@ -21,7 +21,7 @@
 <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-custom-background">
     <div>
         <a href="/">
-            <h1 class="text-custom-text-primary text-3xl font-bold">AI Fire LMS</h1>
+            <h1 class="text-custom-text-primary text-3xl font-bold">{{ config('app.name', 'Laravel') }}</h1>
         </a>
     </div>
 

@@ -17,20 +17,23 @@
             <a href="{{ route('admin.dashboard') }}" class="text-xl font-bold">АДМИН-ПАНЕЛЬ</a>
         </div>
         <nav class="flex-grow p-4 space-y-2">
-            <a href="{{ route('admin.dashboard') }}" class="flex items-center px-3 py-2 rounded-lg text-custom-text-secondary-dark hover:bg-custom-border-dark {{ request()->routeIs('admin.dashboard') ? 'bg-custom-accent text-white' : '' }}">
-                <span>Главная</span>
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 {{ request()->routeIs('admin.dashboard') ? 'bg-indigo-600' : '' }}">
+                <span class="ml-3">Главная</span>
             </a>
-            <a href="{{ route('admin.courses.index') }}" class="flex items-center px-3 py-2 rounded-lg text-custom-text-secondary-dark hover:bg-custom-border-dark {{ request()->routeIs('admin.courses.index') ? 'bg-custom-accent text-white' : '' }}">
-                <span>Курсы</span>
+            <a href="{{ route('admin.courses.index') }}" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 {{ request()->routeIs('admin.courses.index') ? 'bg-indigo-600' : '' }}">
+                <span class="ml-3">Курсы</span>
             </a>
-            <a href="{{ route('admin.users.index') }}" class="flex items-center px-3 py-2 rounded-lg text-custom-text-secondary-dark hover:bg-custom-border-dark {{ request()->routeIs('admin.users.index') ? 'bg-custom-accent text-white' : '' }}">
-                <span>Пользователи</span>
+            <a href="{{ route('admin.users.index') }}" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 {{ request()->routeIs('admin.users.index') ? 'bg-indigo-600' : '' }}">
+                <span class="ml-3">Пользователи</span>
             </a>
             <a href="{{ route('admin.categories.index') }}" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 {{ request()->routeIs('admin.categories.*') ? 'bg-indigo-600' : '' }}">
                 <span class="ml-3">Категории</span>
             </a>
             <a href="{{ route('admin.pages.index') }}" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 {{ request()->routeIs('admin.pages.*') ? 'bg-indigo-600' : '' }}">
                 <span class="ml-3">Страницы</span>
+            </a>
+            <a href="{{ route('admin.settings.index') }}" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 {{ request()->routeIs('admin.settings.index') ? 'bg-indigo-600' : '' }}">
+                <span class="ml-3">Управление LMS</span>
             </a>
         </nav>
         <div class="p-4 border-t border-custom-border-dark">

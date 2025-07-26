@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // Подключаем необходимые трейты и классы Laravel
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 
 // Модель User наследует базовый класс Authenticatable,
 // который дает ей все возможности для аутентификации (вход, выход и т.д.).
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     // HasFactory позволяет нам использовать фабрики для создания тестовых пользователей.
     // Notifiable позволяет отправлять пользователю уведомления (например, о сбросе пароля).
