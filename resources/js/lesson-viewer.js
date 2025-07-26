@@ -46,7 +46,11 @@ const initViewer = () => {
                         <strong class="block">${block.data.meta.title}</strong>
                         <span class="text-sm text-gray-400">${block.data.meta.description}</span>
                     </a>`;
-        }
+        },
+        simpleImage: function(block){
+            return `<img class="img-fluid w-full rounded-lg my-4" src="${block.data.url}" alt="${block.data.caption}">`;
+        },
+        // --- КОНЕЦ НОВОГО БЛОКА ---
     };
     // --- КОНЕЦ ИСПРАВЛЕНИЯ ---
 
