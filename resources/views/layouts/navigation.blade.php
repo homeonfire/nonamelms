@@ -5,7 +5,7 @@
               flex flex-col p-5"
        aria-label="Sidebar">
     <div class="text-center mb-10">
-        <a href="{{ route('dashboard') }}" class="text-xl font-bold text-custom-text-primary-light dark:text-custom-text-primary-dark">{{ config('app.name', 'Laravel') }}</a>
+        <a href="{{ route('dashboard') }}" class="text-xl font-bold text-custom-text-primary-light dark:text-custom-text-primary-dark">{{ $appName }}</a>
     </div>
     <nav class="flex-grow space-y-2">
         <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-600 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-custom-border dark:hover:text-black {{ request()->routeIs('dashboard') ? 'bg-custom-accent text-white' : '' }}">
@@ -61,5 +61,32 @@
                 <span>Выход</span>
             </a>
         </form>
+        <div class="pt-4 mt-4 border-t border-gray-200 dark:border-custom-border-dark">
+            {{-- ИЗМЕНЕНО: Добавляем ID к ссылке --}}
+            <a href="https://nnlms.ru/" id="developer-link" target="_blank"
+               class="flex justify-center items-center">
+                <img src="{{ asset('images/my-logo.png') }}"
+                     alt="Логотип"
+                     class="h-12 w-auto grayscale opacity-75 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+            </a>
+        </div>
     </div>
 </aside>
+    <script>
+        // Ждем, пока вся страница загрузится
+        document.addEventListener('DOMContentLoaded', function() {
+            // Находим нашу ссылку по ID
+            const developerLink = document.getElementById('developer-link');
+
+            if (developerLink) {
+                // Получаем текущий домен сайта из адресной строки
+                const currentHostname = window.location.hostname;
+
+                // Формируем новую ссылку, добавляя UTM-метку
+                const newUrl = `https://nnlms.ru/?utm_source=${currentHostname}`;
+
+                // Устанавливаем новый адрес для ссылки
+                developerLink.href = newUrl;
+            }
+        });
+    </script>
