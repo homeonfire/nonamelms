@@ -26,8 +26,6 @@
         </div>
     </section>
 
-
-    {{-- Новая, подробная секция "Возможности платформы" --}}
     {{-- НОВАЯ, ПОДРОБНАЯ СЕКЦИЯ "ВОЗМОЖНОСТИ ПЛАТФОРМЫ" --}}
     <section class="py-20 bg-custom-container-light dark:bg-custom-container-dark border-y border-custom-border-light dark:border-custom-border-dark">
         <div class="container mx-auto px-4">

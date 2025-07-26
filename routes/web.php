@@ -12,6 +12,7 @@ use App\Http\Controllers\HomeworkController;
 use App\Http\Controllers\HomeworkCheckController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PostController;
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\CourseController as AdminCourseController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\Admin\StaticPageController as AdminStaticPageController
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
 use App\Http\Controllers\Admin\VisitController as AdminVisitController;
+use App\Http\Controllers\Admin\PostController as AdminPostController;
 
 
 
@@ -49,6 +51,8 @@ Route::get('/test-mail', function () {
         return 'Ошибка отправки: ' . $e->getMessage();
     }
 });
+Route::get('/blog', [PostController::class, 'index'])->name('blog.index');
+Route::get('/blog/{post:slug}', [PostController::class, 'show'])->name('blog.show');
 
 
 // --- 2. Роуты для аутентифицированных пользователей ---
@@ -137,6 +141,7 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'admin'])->group(functio
 
     Route::get('/visits', [AdminVisitController::class, 'index'])->name('admin.visits.index');
     Route::post('/settings/test-smtp', [AdminSettingController::class, 'testSmtp'])->name('admin.settings.test-smtp');
+    Route::resource('/posts', AdminPostController::class)->names('admin.posts');
 
 });
 

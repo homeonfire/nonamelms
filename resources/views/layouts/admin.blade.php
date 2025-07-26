@@ -38,6 +38,9 @@
             <a href="{{ route('admin.visits.index') }}" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 {{ request()->routeIs('admin.visits.index') ? 'bg-indigo-600' : '' }}">
                 <span class="ml-3">Посещения</span>
             </a>
+            <a href="{{ route('admin.posts.index') }}" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700 {{ request()->routeIs('admin.posts.*') ? 'bg-indigo-600' : '' }}">
+                <span class="ml-3">Блог</span>
+            </a>
         </nav>
         <div class="p-4 border-t border-custom-border-dark">
             <a href="{{ route('dashboard') }}" class="flex items-center px-3 py-2 rounded-lg text-custom-text-secondary-dark hover:bg-custom-border-dark">
