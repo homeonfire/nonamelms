@@ -7,6 +7,9 @@ use App\Models\Setting;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SmtpTestMail;
+use Illuminate\Support\Facades\Config;
 
 class SettingController extends Controller
 {
@@ -51,5 +54,34 @@ class SettingController extends Controller
         Artisan::call('config:clear');
 
         return back()->with('status', 'Настройки успешно сохранены!');
+    }
+
+    public function testSmtp(Request $request)
+    {
+        // Берем настройки прямо из запроса, не сохраняя их
+        $config = [
+            'mail.mailers.smtp.host' => $request->input('mail_host'),
+            'mail.mailers.smtp.port' => $request->input('mail_port'),
+            'mail.mailers.smtp.encryption' => $request->input('mail_encryption'),
+            'mail.mailers.smtp.username' => $request->input('mail_username'),
+            'mail.mailers.smtp.password' => $request->input('mail_password'),
+            'mail.from.address' => $request->input('mail_from_address'),
+            'mail.from.name' => $request->input('app_name', config('app.name')),
+        ];
+
+        // Временно применяем эти настройки
+        Config::set($config);
+
+        try {
+            // Пытаемся отправить письмо на email текущего админа
+            Mail::to(auth()->user()->email)->send(new SmtpTestMail());
+
+            // Если все прошло успешно, возвращаемся с сообщением об успехе
+            return back()->with('status', 'Тестовое письмо успешно отправлено! Проверьте почту.');
+
+        } catch (\Exception $e) {
+            // Если произошла ошибка, возвращаемся с текстом ошибки
+            return back()->with('error', 'Ошибка отправки: ' . $e->getMessage());
+        }
     }
 }

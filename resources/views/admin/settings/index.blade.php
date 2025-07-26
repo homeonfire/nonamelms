@@ -84,6 +84,9 @@
         <div class="mt-6">
             <button type="submit" class="px-5 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-semibold">Сохранить</button>
         </div>
+        <button type="submit" formaction="{{ route('admin.settings.test-smtp') }}" formmethod="POST" class="px-5 py-2.5 bg-gray-600 text-white rounded-lg hover:bg-gray-700 font-semibold">
+            Отправить тестовое письмо
+        </button>
     </form>
 </x-admin-layout>
 

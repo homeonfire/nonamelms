@@ -136,6 +136,7 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'admin'])->group(functio
     // --- КОНЕЦ НОВОГО БЛОКА ---
 
     Route::get('/visits', [AdminVisitController::class, 'index'])->name('admin.visits.index');
+    Route::post('/settings/test-smtp', [AdminSettingController::class, 'testSmtp'])->name('admin.settings.test-smtp');
 
 });
 
