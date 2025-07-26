@@ -19,11 +19,14 @@ class UserController extends Controller
     /**
      * Показывает страницу со списком всех пользователей.
      */
+    /**
+     * Показывает страницу со списком всех пользователей.
+     */
     public function index()
     {
-        // ИСПРАВЛЕНО: Добавляем with('courses') для загрузки связанных курсов
+        // ИСПРАВЛЕНО: Добавляем with('initialVisit') для загрузки данных о первом визите
         $users = User::where('id', '!=', auth()->id())
-            ->with('courses')
+            ->with('initialVisit')
             ->latest()
             ->get();
 

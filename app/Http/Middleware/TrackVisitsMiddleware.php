@@ -12,14 +12,21 @@ class TrackVisitsMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        // Получаем ID посетителя из cookie или создаем новый
-        $visitorId = $request->cookie('visitor_id', fn() => (string) Str::uuid());
+        // 1. Пытаемся получить ID посетителя из cookie
+        $visitorId = $request->cookie('visitor_id');
+        $shouldSetCookie = false;
 
-        // Если в URL есть UTM-метки, записываем визит
+        // 2. Если ID не найден, генерируем новый
+        if (!$visitorId) {
+            $visitorId = (string) Str::uuid();
+            $shouldSetCookie = true;
+        }
+
+        // 3. Если в URL есть UTM-метки, записываем визит
         if ($request->has('utm_source')) {
             Visit::create([
                 'visitor_id' => $visitorId,
-                'user_id' => $request->user()?->id, // Если пользователь уже залогинен
+                'user_id' => $request->user()?->id,
                 'utm_source' => $request->input('utm_source'),
                 'utm_medium' => $request->input('utm_medium'),
                 'utm_campaign' => $request->input('utm_campaign'),
@@ -29,11 +36,11 @@ class TrackVisitsMiddleware
             ]);
         }
 
-        // Получаем ответ от приложения
+        // 4. Пропускаем запрос дальше по цепочке
         $response = $next($request);
 
-        // "Прикрепляем" cookie к ответу, если его не было
-        if (!$request->hasCookie('visitor_id')) {
+        // 5. Если мы сгенерировали новый ID, "прикрепляем" cookie к ответу
+        if ($shouldSetCookie) {
             // Устанавливаем cookie на 5 лет
             $response->cookie('visitor_id', $visitorId, 60 * 24 * 365 * 5);
         }

@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            // Здесь будет храниться ID самого первого визита, который привел к регистрации
             $table->foreignId('initial_visit_id')->nullable()->constrained('visits')->onDelete('set null');
         });
     }

@@ -22,7 +22,8 @@ use App\Http\Controllers\Admin\EditorJsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\StaticPageController as AdminStaticPageController;
 use Illuminate\Support\Facades\Mail;
-use App\Http\Controllers\Admin\SettingController as AdminSettingController; // Убедитесь, что эта строка есть вверху файла
+use App\Http\Controllers\Admin\SettingController as AdminSettingController;
+use App\Http\Controllers\Admin\VisitController as AdminVisitController;
 
 
 
@@ -133,6 +134,9 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'admin'])->group(functio
     // Роут для сохранения настроек
     Route::post('/settings', [AdminSettingController::class, 'update'])->name('admin.settings.update');
     // --- КОНЕЦ НОВОГО БЛОКА ---
+
+    Route::get('/visits', [AdminVisitController::class, 'index'])->name('admin.visits.index');
+
 });
 
 

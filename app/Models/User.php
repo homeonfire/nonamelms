@@ -79,4 +79,20 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(LessonProgress::class);
     }
+
+    /**
+     * Связь со всеми визитами пользователя.
+     */
+    public function visits()
+    {
+        return $this->hasMany(Visit::class)->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Связь с самым первым визитом, который привел к регистрации.
+     */
+    public function initialVisit()
+    {
+        return $this->belongsTo(Visit::class, 'initial_visit_id');
+    }
 }

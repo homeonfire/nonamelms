@@ -45,6 +45,24 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        // --- НАЧАЛО НОВОЙ ЛОГИКИ ---
+        $visitorId = $request->cookie('visitor_id');
+        if ($visitorId) {
+            // Находим все визиты этого анонимного посетителя
+            $visits = \App\Models\Visit::where('visitor_id', $visitorId)->whereNull('user_id')->orderBy('created_at', 'asc')->get();
+
+            if ($visits->isNotEmpty()) {
+                // Находим самый первый визит и сохраняем его как "первичный источник"
+                $initialVisit = $visits->first();
+                $user->initial_visit_id = $initialVisit->id;
+                $user->save();
+
+                // Привязываем все его визиты (включая первый) к новому user_id
+                \App\Models\Visit::whereIn('id', $visits->pluck('id'))->update(['user_id' => $user->id]);
+            }
+        }
+        // --- КОНЕЦ НОВОЙ ЛОГИКИ ---
+
         // --- ИСПРАВЛЕНО: Читаем настройку из БД ---
         $defaultCourseId = \App\Models\Setting::where('key', 'default_course_id')->first()->value;
         // Если настройка задана, выдаем доступ
