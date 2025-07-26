@@ -4,7 +4,7 @@
         <div class="absolute inset-0 bg-gradient-to-b from-custom-accent/10 to-transparent"></div>
         <div class="container mx-auto text-center px-4 relative z-10">
             <h1 class="text-4xl md:text-6xl font-extrabold text-custom-text-primary-light dark:text-custom-text-primary-dark leading-tight">
-                NoName LMS: Ваша Open Source платформа для обучения
+                NoName LMS: Ваша Open Source платформа для онлайн-курсов
             </h1>
             <p class="mt-6 text-lg text-custom-text-secondary-light dark:text-custom-text-secondary-dark max-w-3xl mx-auto">
                 Получите полный контроль над образовательным процессом. NoName LMS — это готовое решение с открытым исходным кодом, которое вы можете свободно использовать, дорабатывать и масштабировать под любые задачи без ограничений.
