@@ -7,7 +7,8 @@ export default defineConfig({
             input: ['resources/css/app.css',
                 'resources/js/app.js',
                 'resources/js/editor.js',
-                'resources/js/lesson-viewer.js'
+                'resources/js/lesson-viewer.js',
+                'resources/js/page-editor.js'
             ],
             refresh: true,
         }),
