@@ -63,18 +63,17 @@ class RegisteredUserController extends Controller
         }
         // --- КОНЕЦ НОВОЙ ЛОГИКИ ---
 
-        // --- ИСПРАВЛЕНО: Читаем настройку из БД ---
-        $defaultCourseId = \App\Models\Setting::where('key', 'default_course_id')->first()->value;
-        // Если настройка задана, выдаем доступ
+        // --- НАЧАЛО ФИНАЛЬНОГО ИСПРАВЛЕНИЯ ---
+        $defaultCourseId = \App\Models\Setting::where('key', 'default_course_id')->first()?->value;
+
         if ($defaultCourseId) {
-            $user->courses()->attach($defaultCourseId);
+            // ПРОВЕРЯЕМ, НЕ ПРИВЯЗАН ЛИ УЖЕ ЭТОТ КУРС К ПОЛЬЗОВАТЕЛЮ
+            if (!$user->courses()->where('course_id', $defaultCourseId)->exists()) {
+                // Если не привязан, привязываем
+                $user->courses()->attach($defaultCourseId);
+            }
         }
-        // --- КОНЕЦ ИСПРАВЛЕНИЯ ---
-
-
-        // Привязываем курс к только что созданному пользователю.
-        $user->courses()->attach($defaultCourseId);
-        // --- КОНЕЦ НОВОЙ ЛОГИКИ ---
+        // --- КОНЕЦ ФИНАЛЬНОГО ИСПРАВЛЕНИЯ ---
 
         event(new Registered($user));
 
