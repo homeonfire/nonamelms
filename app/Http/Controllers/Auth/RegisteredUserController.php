@@ -15,7 +15,7 @@ use Illuminate\View\View;
 class RegisteredUserController extends Controller
 {
     /**
-     * Display the registration view.
+     * Отображает форму регистрации.
      */
     public function create(): View
     {
@@ -23,15 +23,13 @@ class RegisteredUserController extends Controller
     }
 
     /**
-     * Handle an incoming registration request.
+     * Обрабатывает запрос на регистрацию.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    /**
-     * Обрабатывает запрос на регистрацию.
-     */
     public function store(Request $request): RedirectResponse
     {
+        // 1. Валидация данных из формы
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
@@ -39,44 +37,46 @@ class RegisteredUserController extends Controller
             'terms' => ['required', 'accepted'],
         ]);
 
+        // 2. Создание нового пользователя
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
-        // --- НАЧАЛО НОВОЙ ЛОГИКИ ---
+        // 3. Логика отслеживания UTM-меток
         $visitorId = $request->cookie('visitor_id');
         if ($visitorId) {
-            // Находим все визиты этого анонимного посетителя
             $visits = \App\Models\Visit::where('visitor_id', $visitorId)->whereNull('user_id')->orderBy('created_at', 'asc')->get();
-
             if ($visits->isNotEmpty()) {
-                // Находим самый первый визит и сохраняем его как "первичный источник"
                 $initialVisit = $visits->first();
                 $user->initial_visit_id = $initialVisit->id;
                 $user->save();
-
-                // Привязываем все его визиты (включая первый) к новому user_id
                 \App\Models\Visit::whereIn('id', $visits->pluck('id'))->update(['user_id' => $user->id]);
             }
         }
-        // --- КОНЕЦ НОВОЙ ЛОГИКИ ---
 
-        // --- НАЧАЛО ФИНАЛЬНОГО ИСПРАВЛЕНИЯ ---
+        // 4. Логика выдачи курса по умолчанию
         $defaultCourseId = \App\Models\Setting::where('key', 'default_course_id')->first()?->value;
-
         if ($defaultCourseId) {
-            // ПРОВЕРЯЕМ, НЕ ПРИВЯЗАН ЛИ УЖЕ ЭТОТ КУРС К ПОЛЬЗОВАТЕЛЮ
             if (!$user->courses()->where('course_id', $defaultCourseId)->exists()) {
-                // Если не привязан, привязываем
                 $user->courses()->attach($defaultCourseId);
             }
         }
-        // --- КОНЕЦ ФИНАЛЬНОГО ИСПРАВЛЕНИЯ ---
 
-        event(new Registered($user));
+        // 5. Условная отправка письма для верификации
+        $isMailConfigured = config('mail.mailer') === 'smtp' &&
+            !empty(config('mail.host')) &&
+            !empty(config('mail.username')) &&
+            !empty(config('mail.password'));
 
+        if ($isMailConfigured) {
+            event(new Registered($user));
+        } else {
+            $user->markEmailAsVerified();
+        }
+
+        // 6. Авторизация пользователя и перенаправление
         Auth::login($user);
 
         return redirect(route('dashboard', absolute: false));
