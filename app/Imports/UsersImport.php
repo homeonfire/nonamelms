@@ -38,11 +38,9 @@ class UsersImport implements ToModel, WithHeadingRow
             !empty(config('mail.username')) &&
             !empty(config('mail.password'));
 
-        if ($isMailConfigured) {
-            // Если почта настроена, отправляем письмо
+        if (isMailConfigured()) {
             event(new Registered($user));
         } else {
-            // Если не настроена, сразу подтверждаем email
             $user->markEmailAsVerified();
         }
 

@@ -70,7 +70,7 @@ class RegisteredUserController extends Controller
             !empty(config('mail.username')) &&
             !empty(config('mail.password'));
 
-        if ($isMailConfigured) {
+        if (isMailConfigured()) {
             event(new Registered($user));
         } else {
             $user->markEmailAsVerified();

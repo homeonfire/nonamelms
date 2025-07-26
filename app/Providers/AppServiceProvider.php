@@ -6,31 +6,44 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Setting;
+use Illuminate\Support\Facades\Config; // <-- Добавляем Config
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        //
-    }
+    public function register(): void { }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
-        // Передаем название сайта во все шаблоны
-        try {
-            if (Schema::hasTable('settings')) {
-                $appName = Setting::where('key', 'app_name')->first()->value ?? config('app.name', 'AI Fire LMS');
-                View::share('appName', $appName);
+        // Проверяем, существует ли таблица, чтобы избежать ошибок при миграциях
+        if (Schema::hasTable('settings')) {
+            try {
+                // Получаем все настройки из БД
+                $settings = Setting::pluck('value', 'key');
+
+                // --- НАЧАЛО НОВОЙ ЛОГИКИ ---
+                // Если есть настройки почты, применяем их
+                if (isset($settings['mail_host']) && !empty($settings['mail_host'])) {
+                    Config::set([
+                        'mail.mailers.smtp.host' => $settings['mail_host'],
+                        'mail.mailers.smtp.port' => $settings['mail_port'],
+                        'mail.mailers.smtp.encryption' => $settings['mail_encryption'],
+                        'mail.mailers.smtp.username' => $settings['mail_username'],
+                        'mail.mailers.smtp.password' => $settings['mail_password'],
+                        'mail.from.address' => $settings['mail_from_address'],
+                        'mail.from.name' => $settings['app_name'] ?? config('app.name'),
+                    ]);
+                }
+                // --- КОНЕЦ НОВОЙ ЛОГИКИ ---
+
+                // Передаем название сайта во все шаблоны
+                if (isset($settings['app_name'])) {
+                    Config::set('app.name', $settings['app_name']);
+                }
+                View::share('appName', config('app.name'));
+
+            } catch (\Exception $e) {
+                // Игнорируем ошибки, если что-то пошло не так
             }
-        } catch (\Exception $e) {
-            // Если база данных еще не доступна, используем значение по умолчанию
-            View::share('appName', config('app.name', 'AI Fire LMS'));
         }
     }
 }

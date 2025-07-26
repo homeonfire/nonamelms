@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use App\Models\Course;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan; // <-- Добавляем для очистки кэша
+use Illuminate\Support\Facades\Artisan;
 
 class SettingController extends Controller
 {
@@ -16,47 +16,34 @@ class SettingController extends Controller
     public function index()
     {
         // Получаем все настройки одним запросом
-        $settings = Setting::whereIn('key', [
-            'landing_page_enabled',
-            'default_course_id',
-            'app_name'
-        ])->pluck('value', 'key');
+        $settings = Setting::pluck('value', 'key');
 
         // Получаем все курсы для выпадающего списка
         $courses = Course::all();
 
-        // Передаем данные в шаблон в удобном виде
+        // Передаем данные в шаблон
         return view('admin.settings.index', [
             'settings' => $settings,
-            'courses' => $courses,
-            // ИСПРАВЛЕНО: Явно передаем переменные, которые ожидает шаблон
-            'landingPageSettingValue' => $settings['landing_page_enabled'] ?? '1',
-            'defaultCourseSettingValue' => $settings['default_course_id'] ?? null,
+            'courses' => $courses
         ]);
     }
 
     /**
-     * Сохраняет настройки.
+     * Сохраняет все настройки.
      */
     public function update(Request $request)
     {
-        // Обновляем настройку лендинга
-        Setting::updateOrCreate(
-            ['key' => 'landing_page_enabled'],
-            ['value' => $request->has('landing_page_enabled') ? '1' : '0']
-        );
+        // Собираем все настройки из формы, кроме CSRF-токена
+        $settingsToUpdate = $request->except('_token');
 
-        // Обновляем курс по умолчанию
-        Setting::updateOrCreate(
-            ['key' => 'default_course_id'],
-            ['value' => $request->input('default_course_id')]
-        );
+        // Обрабатываем чекбокс, так как он не приходит в запросе, если не отмечен
+        $settingsToUpdate['landing_page_enabled'] = $request->has('landing_page_enabled') ? '1' : '0';
 
-        // Сохраняем название приложения
-        if ($request->filled('app_name')) {
+        // Проходим по каждой настройке и сохраняем ее в базу данных
+        foreach ($settingsToUpdate as $key => $value) {
             Setting::updateOrCreate(
-                ['key' => 'app_name'],
-                ['value' => $request->input('app_name')]
+                ['key' => $key],
+                ['value' => $value]
             );
         }
 
