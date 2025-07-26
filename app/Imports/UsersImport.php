@@ -28,17 +28,22 @@ class UsersImport implements ToModel, WithHeadingRow
             'name'     => $row['name'],
             'email'    => $row['email'],
             'password' => Hash::make($row['password']),
-            'role'     => 'user',
         ]);
 
-        // --- ИСПРАВЛЕНО: Запускаем событие регистрации ---
-        // Эта строка "скажет" Laravel отправить письмо с подтверждением
         event(new Registered($user));
-        // ---------------------------------------------
 
-        // Привязываем выбранные курсы
-        if (!empty($this->courseIds)) {
-            $user->courses()->sync($this->courseIds);
+        // --- ИСПРАВЛЕНО: Читаем настройку из БД ---
+        $defaultCourseId = \App\Models\Setting::where('key', 'default_course_id')->first()->value;
+        $allCourseIds = $this->courseIds; // Курсы, выбранные в форме импорта
+
+        // Если есть курс по умолчанию, добавляем его в массив
+        if ($defaultCourseId) {
+            $allCourseIds[] = $defaultCourseId;
+        }
+        // --- КОНЕЦ ИСПРАВЛЕНИЯ ---
+
+        if (!empty($allCourseIds)) {
+            $user->courses()->sync(array_unique($allCourseIds));
         }
 
         return $user;

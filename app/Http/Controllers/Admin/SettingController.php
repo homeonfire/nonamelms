@@ -1,32 +1,47 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
+use App\Models\Course; // <-- Добавляем модель Course
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
-    // Показывает страницу настроек
     public function index()
     {
-        // Находим настройку в БД или создаем новую со значением по умолчанию '1' (включено)
+        // Находим настройку лендинга
         $landingPageSetting = Setting::firstOrCreate(
             ['key' => 'landing_page_enabled'],
             ['value' => '1']
         );
-        return view('admin.settings.index', compact('landingPageSetting'));
+
+        // --- НАЧАЛО НОВОЙ ЛОГИКИ ---
+        // Находим настройку курса по умолчанию
+        $defaultCourseSetting = Setting::firstOrCreate(
+            ['key' => 'default_course_id'],
+            ['value' => null] // По умолчанию функция выключена
+        );
+
+        // Получаем все курсы для выпадающего списка
+        $courses = Course::all();
+        // --- КОНЕЦ НОВОЙ ЛОГИКИ ---
+
+        return view('admin.settings.index', compact('landingPageSetting', 'defaultCourseSetting', 'courses'));
     }
 
-    // Сохраняет настройки
     public function update(Request $request)
     {
-        // Если галочка была поставлена, значение будет '1', если нет - '0'
-        $value = $request->has('landing_page_enabled') ? '1' : '0';
+        // Обновляем настройку лендинга
+        $landingValue = $request->has('landing_page_enabled') ? '1' : '0';
+        Setting::updateOrCreate(['key' => 'landing_page_enabled'], ['value' => $landingValue]);
 
-        Setting::updateOrCreate(
-            ['key' => 'landing_page_enabled'],
-            ['value' => $value]
-        );
+        // --- НАЧАЛО НОВОЙ ЛОГИКИ ---
+        // Обновляем настройку курса по умолчанию
+        $defaultCourseId = $request->input('default_course_id');
+        Setting::updateOrCreate(['key' => 'default_course_id'], ['value' => $defaultCourseId]);
+        // --- КОНЕЦ НОВОЙ ЛОГИКИ ---
 
         return back()->with('status', 'Настройки успешно сохранены!');
     }

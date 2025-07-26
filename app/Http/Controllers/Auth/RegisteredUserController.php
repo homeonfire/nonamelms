@@ -45,10 +45,14 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // --- НАЧАЛО НОВОЙ ЛОГИКИ ---
-        // ID курса, который будет выдан автоматически.
-        // Замените 1 на ID нужного вам курса.
-        $defaultCourseId = 1;
+        // --- ИСПРАВЛЕНО: Читаем настройку из БД ---
+        $defaultCourseId = \App\Models\Setting::where('key', 'default_course_id')->first()->value;
+        // Если настройка задана, выдаем доступ
+        if ($defaultCourseId) {
+            $user->courses()->attach($defaultCourseId);
+        }
+        // --- КОНЕЦ ИСПРАВЛЕНИЯ ---
+
 
         // Привязываем курс к только что созданному пользователю.
         $user->courses()->attach($defaultCourseId);
