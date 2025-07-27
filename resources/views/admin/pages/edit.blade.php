@@ -14,7 +14,6 @@
             {{-- Контент Editor.js --}}
             <div class="mt-4">
                 <label class="block mb-2 text-sm font-medium text-gray-300">Контент</label>
-                {{-- Убираем data-атрибут, он больше не нужен --}}
                 <div id="editorjs" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg block w-full p-2.5 min-h-[300px]"></div>
                 <input type="hidden" name="content" id="content_text_output">
             </div>
@@ -29,13 +28,9 @@
         </div>
     </form>
 
-    {{-- --- НАЧАЛО ГЛАВНОГО ИСПРАВЛЕНИЯ --- --}}
-    {{-- 1. Создаем скрипт ПЕРЕД подключением основного файла Vite --}}
     <script>
         window.INITIAL_EDITOR_DATA = @json($page->content ?? (object)[]);
     </script>
-    {{-- --- КОНЕЦ ГЛАВНОГО ИСПРАВЛЕНИЯ --- --}}
 
-    {{-- Подключаем наш отдельный скрипт для редактора страниц --}}
     @vite('resources/js/page-editor.js')
 </x-admin-layout>

@@ -14,6 +14,6 @@ class Category extends Model
         return $this->belongsToMany(Course::class, 'course_categories');
     }
 
-    use HasFactory; // <-- 2. Use the trait inside the class
+    use HasFactory;
 
 }

@@ -25,10 +25,6 @@ class Course extends Model
     {
         return $this->hasMany(Module::class)->orderBy('order_number');
     }
-
-    /**
-     * ИСПРАВЛЕНО: Явно указываем, что нам нужны ID из таблицы lessons.
-     */
     public function lessons()
     {
         // hasManyThrough - это "связь через", которая позволяет получить уроки курса через модули.

@@ -7,7 +7,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-// use Illuminate\Contracts\Auth\MustVerifyEmail; // Эта строка нужна, если вы хотите включить обязательную верификацию email
 
 // Модель User наследует базовый класс Authenticatable,
 // который дает ей все возможности для аутентификации (вход, выход и т.д.).

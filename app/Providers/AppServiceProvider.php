@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Setting;
-use Illuminate\Support\Facades\Config; // <-- Добавляем Config
+use Illuminate\Support\Facades\Config;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,7 +20,6 @@ class AppServiceProvider extends ServiceProvider
                 // Получаем все настройки из БД
                 $settings = Setting::pluck('value', 'key');
 
-                // --- НАЧАЛО НОВОЙ ЛОГИКИ ---
                 // Если есть настройки почты, применяем их
                 if (isset($settings['mail_host']) && !empty($settings['mail_host'])) {
                     Config::set([
@@ -33,7 +32,6 @@ class AppServiceProvider extends ServiceProvider
                         'mail.from.name' => $settings['app_name'] ?? config('app.name'),
                     ]);
                 }
-                // --- КОНЕЦ НОВОЙ ЛОГИКИ ---
 
                 // Передаем название сайта во все шаблоны
                 if (isset($settings['app_name'])) {

@@ -1,6 +1,5 @@
 <x-app-layout>
     <div class="flex justify-between items-center mb-6">
-        {{-- ИСПОЛЬЗУЕМ КЛАССЫ ДЛЯ ОБЕИХ ТЕМ --}}
         <h1 class="text-3xl font-bold text-custom-text-primary-light dark:text-custom-text-primary-dark">Работы на проверку</h1>
     </div>
 
@@ -10,7 +9,6 @@
         </div>
     @endif
 
-    {{-- ИСПОЛЬЗУЕМ КЛАССЫ ДЛЯ ОБЕИХ ТЕМ --}}
     <div class="bg-custom-container-light dark:bg-custom-container-dark border border-custom-border-light dark:border-custom-border-dark rounded-lg overflow-hidden">
         <table class="min-w-full">
             <tbody class="divide-y divide-custom-border-light dark:divide-custom-border-dark">

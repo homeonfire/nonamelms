@@ -12,7 +12,7 @@
                 <li>Все пользователи из файла будут созданы с ролью "Пользователь".</li>
                 <li>Если вы выберете курсы ниже, все импортированные пользователи получат к ним доступ.</li>
             </ol>
-            <a href="ВАША_ССЫЛКА_НА_ШАБЛОН_В_ГУГЛ_ДОКС" {{-- <-- Замените этот текст на вашу ссылку --}}
+            <a href="https://docs.google.com/spreadsheets/d/12rbc_ZSdPF9OTB0wRIUxLhtxP856mj607Rz9iXyeaTQ/edit?usp=sharing"
             target="_blank"
                class="inline-block mt-4 text-sm font-semibold text-indigo-400 hover:text-indigo-300">
                 Скачать файл-шаблон &rarr;

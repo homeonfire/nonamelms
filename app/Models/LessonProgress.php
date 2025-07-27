@@ -14,10 +14,6 @@ class LessonProgress extends Model
      * Laravel по умолчанию ищет 'lesson_progresses', а у нас 'lesson_progress'.
      */
     protected $table = 'lesson_progress';
-
-    /**
-     * ИСПРАВЛЕНО: Указываем, какие поля можно безопасно заполнять.
-     */
     protected $fillable = ['user_id', 'lesson_id'];
 
     /**

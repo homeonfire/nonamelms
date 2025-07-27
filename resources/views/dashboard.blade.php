@@ -25,7 +25,6 @@
     {{-- Блок "Рекомендации" --}}
     <section class="mt-10">
         <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-5">Рекомендации</h3>
-        {{-- ИЗМЕНЕНО: lg:grid-cols-4 --}}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach ($recommendedCourses as $course)
                 <div class="relative block rounded-lg opacity-50 cursor-not-allowed">

@@ -24,7 +24,6 @@ class UserController extends Controller
      */
     public function index()
     {
-        // ИСПРАВЛЕНО: Добавляем with('initialVisit') для загрузки данных о первом визите
         $users = User::where('id', '!=', auth()->id())
             ->with('initialVisit')
             ->latest()

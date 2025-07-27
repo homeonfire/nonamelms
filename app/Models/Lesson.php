@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory; // <-- 1. Import
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Lesson extends Model
 {
-    use HasFactory; // <-- 2. Use the trait
+    use HasFactory;
 
     protected $fillable = ['title', 'module_id', 'order_number', 'content_url', 'content_text'];
 

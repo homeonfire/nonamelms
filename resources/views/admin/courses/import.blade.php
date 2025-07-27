@@ -12,7 +12,7 @@
                 <li>В колонке `title` — соответствующее название.</li>
                 <li>В одном файле должен быть только **один** курс.</li>
             </ol>
-            <a href="#" {{-- <-- Вставьте сюда ссылку на ваш шаблон --}}
+            <a href="https://docs.google.com/spreadsheets/d/1SwMfnMCCo83u1JbuZcJFgDlAWNugVfyotcG-rFNT0BM/edit?usp=sharing"
             target="_blank"
                class="inline-block mt-4 text-sm font-semibold text-indigo-400 hover:text-indigo-300">
                 Скачать файл-шаблон &rarr;

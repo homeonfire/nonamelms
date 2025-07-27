@@ -17,7 +17,6 @@
     </script>
 </head>
 <body class="font-sans antialiased">
-{{-- Используем наши кастомные цвета --}}
 <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-custom-background">
     <div>
         <a href="/">

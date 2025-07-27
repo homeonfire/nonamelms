@@ -17,7 +17,6 @@
 <body class="font-sans antialiased">
 <div class="min-h-screen bg-custom-background-light dark:bg-custom-background-dark">
 
-    {{-- Боковое меню. Оно позиционируется абсолютно и не влияет на основной контент. --}}
     @include('layouts.navigation')
 
     {{-- ШАПКА ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ --}}
@@ -30,7 +29,6 @@
         </button>
     </header>
 
-    {{-- ИСПРАВЛЕНО: Основной контент. Добавляем отступ слева ТОЛЬКО на больших экранах --}}
     <main class="p-6 lg:p-10 lg:ml-64">
         {{ $slot }}
     </main>

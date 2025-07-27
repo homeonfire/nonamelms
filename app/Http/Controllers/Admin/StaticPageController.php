@@ -52,7 +52,6 @@ class StaticPageController extends Controller
         $page->update([
             'title' => $validated['title'],
             'slug' => Str::slug($validated['title']),
-            // ИСПРАВЛЕНО: Декодируем JSON перед сохранением, чтобы модель получила массив
             'content' => json_decode($validated['content'], true),
         ]);
 

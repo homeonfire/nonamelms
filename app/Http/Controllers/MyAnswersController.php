@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 // Подключаем необходимые классы
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; // Для доступа к авторизованному пользователю
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 // Контроллер, отвечающий за страницу "Мои ответы"

@@ -10,11 +10,6 @@ class HomeworkAnswer extends Model
     use HasFactory;
 
     protected $fillable = ['homework_id', 'user_id', 'answers', 'status', 'comment', 'checked_at'];
-
-    /**
-     * ИСПРАВЛЕНО: Добавляем $casts, чтобы Laravel автоматически
-     * превращал эти поля в объекты даты (Carbon).
-     */
     protected $casts = [
         'answers' => 'array',
         'submitted_at' => 'datetime',

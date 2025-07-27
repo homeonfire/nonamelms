@@ -9,9 +9,6 @@ class Visit extends Model
 {
     use HasFactory;
 
-    /**
-     * ИСПРАВЛЕНО: Указываем все поля, которые можно безопасно заполнять.
-     */
     protected $fillable = [
         'visitor_id',
         'user_id',

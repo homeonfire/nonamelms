@@ -57,8 +57,6 @@
 
 
     {{-- Скрипт для ДЗ и Editor.js --}}
-
-    {{-- Скрипт для динамического добавления/удаления полей --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const container = document.getElementById('questions-container');

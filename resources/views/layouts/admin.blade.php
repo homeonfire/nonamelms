@@ -10,7 +10,6 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased">
-{{-- ИСПОЛЬЗУЕМ НАШИ КАСТОМНЫЕ ЦВЕТА --}}
 <div class="flex h-screen bg-custom-background-dark">
     <aside class="w-64 flex-shrink-0 bg-custom-container-dark text-custom-text-primary-dark flex flex-col">
         <div class="h-16 flex items-center justify-center border-b border-custom-border-dark">
@@ -49,7 +48,6 @@
         </div>
     </aside>
 
-    {{-- Основной контент (убрали обертку и header) --}}
     <main class="flex-1 overflow-x-hidden overflow-y-auto p-6 lg:p-10">
         {{ $slot }}
     </main>

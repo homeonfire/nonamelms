@@ -13,12 +13,10 @@
             return 'https://www.youtube.com/embed/' . $matches[2];
         }
 
-        // --- ДОБАВЛЕНО: Поддержка Rutube ---
         // Ищет ссылки вида https://rutube.ru/video/айди_видео/
         if (preg_match('/rutube\.ru\/video\/([a-zA-Z0-9_]+)\//', $url, $matches)) {
             return 'https://rutube.ru/play/embed/' . $matches[1];
         }
-        // --- КОНЕЦ НОВОГО БЛОКА ---
 
         return null;
     }
@@ -116,7 +114,6 @@
 
         </div>
 
-        {{-- Боковая панель с содержанием --}}
         {{-- Боковая панель с содержанием --}}
         <div class="w-full lg:w-1/4">
             {{-- ИСПОЛЬЗУЕМ КЛАССЫ ДЛЯ ОБЕИХ ТЕМ --}}

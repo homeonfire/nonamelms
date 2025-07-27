@@ -28,7 +28,6 @@ class CourseController extends Controller
      */
     public function create()
     {
-        // ИСПРАВЛЕНО: Получаем все категории для формы
         $categories = Category::all();
         return view('admin.courses.create', compact('categories'));
     }
@@ -56,7 +55,6 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        // ИСПРАВЛЕНО: Получаем все категории и уже привязанные к курсу
         $categories = Category::all();
         $courseCategories = $course->categories->pluck('id')->toArray();
 
