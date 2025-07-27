@@ -12,17 +12,15 @@ class TrackVisitsMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        // 1. Пытаемся получить ID посетителя из cookie
         $visitorId = $request->cookie('visitor_id');
         $shouldSetCookie = false;
 
-        // 2. Если ID не найден, генерируем новый
         if (!$visitorId) {
             $visitorId = (string) Str::uuid();
             $shouldSetCookie = true;
         }
 
-        // 3. Если в URL есть UTM-метки, записываем визит
+        // Если в URL есть UTM-метки, записываем визит со всеми данными
         if ($request->has('utm_source')) {
             Visit::create([
                 'visitor_id' => $visitorId,
@@ -33,15 +31,15 @@ class TrackVisitsMiddleware
                 'utm_term' => $request->input('utm_term'),
                 'utm_content' => $request->input('utm_content'),
                 'landing_page' => $request->fullUrl(),
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'referrer' => $request->header('referer'),
             ]);
         }
 
-        // 4. Пропускаем запрос дальше по цепочке
         $response = $next($request);
 
-        // 5. Если мы сгенерировали новый ID, "прикрепляем" cookie к ответу
         if ($shouldSetCookie) {
-            // Устанавливаем cookie на 5 лет
             $response->cookie('visitor_id', $visitorId, 60 * 24 * 365 * 5);
         }
 

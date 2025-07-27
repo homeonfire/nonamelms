@@ -17,7 +17,10 @@ class Visit extends Model
         'utm_campaign',
         'utm_term',
         'utm_content',
-        'landing_page'
+        'landing_page',
+        'ip_address',
+        'user_agent',
+        'referrer'
     ];
 
     public function visits()
