@@ -43,6 +43,9 @@ class UserController extends Controller
     /**
      * Сохраняет нового пользователя в базе данных.
      */
+    /**
+     * Сохраняет нового пользователя в базе данных.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -52,12 +55,20 @@ class UserController extends Controller
             'role' => ['required', 'in:user,admin'],
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
+
+        // Проверяем, настроена ли почта, и отправляем письмо
+        if (isMailConfigured()) {
+            event(new Registered($user));
+        } else {
+            // Если почта не настроена, сразу подтверждаем email
+            $user->markEmailAsVerified();
+        }
 
         return redirect()->route('admin.users.index')->with('status', 'Пользователь успешно создан!');
     }
