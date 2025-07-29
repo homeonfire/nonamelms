@@ -7,9 +7,10 @@ use App\Models\User;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules; // <-- ИСПРАВЛЕНО: Добавляем эту строку
+use Illuminate\Validation\Rules;
 use App\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Auth\Events\Registered;
 
 class UserController extends Controller
 {
