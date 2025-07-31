@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Imports\CourseStructureImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Category;
+use App\Models\PaymentSetting;
 
 class CourseController extends Controller
 {
@@ -29,7 +30,10 @@ class CourseController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.courses.create', compact('categories'));
+        // Проверяем, включен ли LeadPay в настройках
+        $leadPayEnabled = PaymentSetting::where('gateway_name', 'leadpay')->where('key', 'enabled')->first()?->value === '1';
+
+        return view('admin.courses.create', compact('categories', 'leadPayEnabled'));
     }
 
     /**
@@ -41,7 +45,9 @@ class CourseController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'difficulty_level' => 'required|in:beginner,intermediate,advanced',
-            'categories' => 'nullable|array' // Валидируем категории
+            'price' => 'required|numeric|min:0',
+            'leadpay_product_id' => 'nullable|string',
+            'categories' => 'nullable|array',
         ]);
 
         $course = Course::create($validated);
@@ -57,8 +63,10 @@ class CourseController extends Controller
     {
         $categories = Category::all();
         $courseCategories = $course->categories->pluck('id')->toArray();
+        // Проверяем, включен ли LeadPay в настройках
+        $leadPayEnabled = PaymentSetting::where('gateway_name', 'leadpay')->where('key', 'enabled')->first()?->value === '1';
 
-        return view('admin.courses.edit', compact('course', 'categories', 'courseCategories'));
+        return view('admin.courses.edit', compact('course', 'categories', 'courseCategories', 'leadPayEnabled'));
     }
 
     /**
@@ -70,7 +78,9 @@ class CourseController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'difficulty_level' => 'required|in:beginner,intermediate,advanced',
-            'categories' => 'nullable|array' // Валидируем категории
+            'price' => 'required|numeric|min:0',
+            'leadpay_product_id' => 'nullable|string',
+            'categories' => 'nullable|array',
         ]);
 
         $course->update($validated);

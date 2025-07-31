@@ -13,6 +13,9 @@ use App\Http\Controllers\HomeworkCheckController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\WebhookController;
+use App\Http\Controllers\PaymentController;
+
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\CourseController as AdminCourseController;
@@ -26,7 +29,9 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
 use App\Http\Controllers\Admin\VisitController as AdminVisitController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
-
+use App\Http\Controllers\Admin\PaymentSettingController as AdminPaymentSettingController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\OrderDetailController as AdminOrderDetailController;
 
 
 /*
@@ -53,6 +58,14 @@ Route::get('/test-mail', function () {
 });
 Route::get('/blog', [PostController::class, 'index'])->name('blog.index');
 Route::get('/blog/{post:slug}', [PostController::class, 'show'])->name('blog.show');
+
+// Роут для приема уведомлений от LeadPay
+Route::post('/webhooks/leadpay', [WebhookController::class, 'handleLeadPay'])->name('webhooks.leadpay');
+Route::get('/payment/{course}', [PaymentController::class, 'show'])->middleware('auth')->name('payment.show');
+Route::post('/payment/{course}', [PaymentController::class, 'process'])->middleware('auth')->name('payment.process');
+
+Route::get('/payment/{course}', [PaymentController::class, 'show'])->name('payment.show');
+Route::post('/payment/{course}', [PaymentController::class, 'process'])->name('payment.process');
 
 
 // --- 2. Роуты для аутентифицированных пользователей ---
@@ -143,14 +156,18 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'admin'])->group(functio
     Route::post('/settings/test-smtp', [AdminSettingController::class, 'testSmtp'])->name('admin.settings.test-smtp');
     Route::resource('/posts', AdminPostController::class)->names('admin.posts');
 
+    // Роуты для настроек платежей
+    Route::get('/payment-settings', [AdminPaymentSettingController::class, 'index'])->name('admin.payment.settings');
+    Route::post('/payment-settings', [AdminPaymentSettingController::class, 'store'])->name('admin.payment.store');
+
+    Route::get('/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('/orders/{order}', [AdminOrderDetailController::class, 'show'])->name('admin.orders.show');
 });
 
 
 // --- 4. Роуты для Проверки ДЗ (доступны только админам) ---
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/homework-check', [HomeworkCheckController::class, 'index'])->name('homework-check.index');
-    Route::get('/homework-check/{submission}', [HomeworkCheckController::class, 'show'])->name('homework-check.show');
-    Route::post('/homework-check/{submission}', [HomeworkCheckController::class, 'process'])->name('homework-check.process');
 });
 
 

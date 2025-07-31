@@ -53,6 +53,21 @@
                         @endforeach
                     </div>
                 </div>
+
+                {{-- Поле для Цены --}}
+                <div>
+                    <label for="price" class="block mb-2 text-sm font-medium text-gray-700">Цена (в рублях)</label>
+                    <input type="number" name="price" id="price" step="0.01" value="{{ old('price', $course->price ?? 0) }}" class="bg-gray-50 ... w-full p-2.5">
+                    <p class="mt-1 text-xs text-gray-500">Установите 0, если курс бесплатный.</p>
+                </div>
+
+                {{-- Поле для ID продукта LeadPay --}}
+                @if ($leadPayEnabled)
+                    <div>
+                        <label for="leadpay_product_id" class="block mb-2 text-sm font-medium text-gray-700">ID продукта в LeadPay</label>
+                        <input type="text" name="leadpay_product_id" id="leadpay_product_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+                    </div>
+                @endif
             </div>
 
             <div class="mt-6">

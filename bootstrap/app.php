@@ -18,6 +18,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->appendToGroup('web', [
             \App\Http\Middleware\TrackVisitsMiddleware::class,
         ]);
+
+        // Добавляем наш вебхук в исключения для CSRF-проверки
+        $middleware->validateCsrfTokens(except: [
+            'webhooks/leadpay' // Добавляем наш вебхук в исключения
+        ]);;
     })
     // --- ДОБАВЬТЕ ИЛИ ИЗМЕНИТЕ ЭТОТ БЛОК ---
     ->withProviders([

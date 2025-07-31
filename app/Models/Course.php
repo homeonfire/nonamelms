@@ -9,8 +9,7 @@ class Course extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'difficulty_level'];
-
+    protected $fillable = ['title', 'description', 'difficulty_level', 'price', 'leadpay_product_id'];
     public function users()
     {
         return $this->belongsToMany(User::class);
@@ -29,5 +28,10 @@ class Course extends Model
     {
         // hasManyThrough - это "связь через", которая позволяет получить уроки курса через модули.
         return $this->hasManyThrough(Lesson::class, Module::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

@@ -9,7 +9,36 @@
             Назад к курсам
         </a>
     </div>
+    {{-- НОВЫЙ БЛОК: Ссылка на оплату --}}
+    <div class="mb-6">
+        <label class="block mb-2 text-sm font-medium text-gray-700">Прямая ссылка на страницу оплаты курса</label>
+        <div class="flex gap-2">
+            <input type="text" id="payment-link" value="{{ route('payment.show', $course) }}" readonly class="bg-gray-200 border border-gray-300 text-gray-500 text-sm rounded-lg block w-full p-2.5 cursor-not-allowed">
+            <button type="button" id="copy-link-btn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 font-semibold flex-shrink-0">
+                Копировать
+            </button>
+        </div>
+    </div>
 
+    {{-- НОВЫЙ СКРИПТ: Логика для копирования --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const copyBtn = document.getElementById('copy-link-btn');
+            if (copyBtn) {
+                copyBtn.addEventListener('click', function() {
+                    const linkInput = document.getElementById('payment-link');
+                    linkInput.select();
+                    linkInput.setSelectionRange(0, 99999);
+                    navigator.clipboard.writeText(linkInput.value);
+
+                    this.textContent = 'Скопировано!';
+                    setTimeout(() => {
+                        this.textContent = 'Копировать';
+                    }, 2000);
+                });
+            }
+        });
+    </script>
     {{-- Сообщение об успехе --}}
     @if (session('status'))
         <div class="mb-4 p-4 text-sm text-green-800 bg-green-100 rounded-lg">
